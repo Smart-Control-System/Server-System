@@ -46,5 +46,5 @@ class Server:
 
 
 if __name__ == '__main__':
-    a = Server('192.168.1.86', 777)
+    a = Server('192.168.1.86', 7777)
     a.main()
