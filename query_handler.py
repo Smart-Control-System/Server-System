@@ -22,6 +22,8 @@ class Server:
         try:
             while 1:
                 self.connection, self.address = self.socket.accept()
+                print(self.connection)
+                print('yeeeah')
 
                 # always setting up buffer size before a message
                 self.bufer_size = self.connection.recv(8).decode('utf-8')
