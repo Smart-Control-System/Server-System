@@ -1,10 +1,10 @@
 #include <WiFi.h>
  
-const char* ssid = "yourNetworkName";
-const char* password =  "yourNetworkPass";
+const char* ssid = "Linteh-work";
+const char* password =  "SKART082020";
  
-const uint16_t port = 8090;
-const char * host = "192.168.1.83";
+const uint16_t port = 7777;
+const char * host = "192.168.1.86";
  
 void setup()
 {
