@@ -36,7 +36,7 @@ class Server:
 
                 data_recieve = self.connection.recv(int(self.bufer_size)).decode('utf-8')
 
-                data_recieve = json.loads(data_recieve)
+                #data_recieve = json.loads(data_recieve)
 
                 print(f'Message from {str(self.address)}\n'
                       f'"{data_recieve}"')
