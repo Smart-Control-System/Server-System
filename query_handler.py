@@ -23,20 +23,22 @@ class Server:
             while 1:
                 self.connection, self.address = self.socket.accept()
                 print(self.connection)
-                print('yeeeah')
+
 
                 # always setting up buffer size before a message
                 self.bufer_size = self.connection.recv(8).decode('utf-8')
 
                 if self.bufer_size.isdigit():
-                    pass
+                    print('setting buffer size to', self.bufer_size)
                 else:
                     self.connection.close()
                     continue
 
                 data_recieve = self.connection.recv(int(self.bufer_size)).decode('utf-8')
 
-                data_recieve = json.loads(data_recieve)
+                # print(data_recieve)
+
+                # data_recieve = json.loads(data_recieve)
 
                 print(f'Message from {str(self.address)}\n'
                       f'"{data_recieve}"')
