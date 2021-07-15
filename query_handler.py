@@ -15,7 +15,7 @@ class Server:
         self.socket.listen(1)
         self.connection = None
         self.address = None
-        self.bufer_size = 0
+        self.buffer_size = 0
         self.json_data = 0
 
     def main(self):
@@ -24,29 +24,32 @@ class Server:
                 self.connection, self.address = self.socket.accept()
                 print(self.connection)
 
-
                 # always setting up buffer size before a message
-                self.bufer_size = self.connection.recv(8).decode('utf-8')
+                self.buffer_size = self.connection.recv(8).decode('utf-8')
 
-                if self.bufer_size.isdigit():
-                    print('setting buffer size to', self.bufer_size)
+                if self.buffer_size.isdigit():
+                    print('setting buffer size to', self.buffer_size)
                 else:
                     self.connection.close()
                     continue
 
-                data_recieve = self.connection.recv(int(self.bufer_size)).decode('utf-8')
+                data_receive = self.connection.recv(int(self.buffer_size)).decode('utf-8')
 
-                # print(data_recieve)
+                data_receive = json.loads()
 
-                # data_recieve = json.loads(data_recieve)
+                with open('all_queries.json', 'r') as file:
+                    string_to_write = data_receive + '\n'
+                    file.write(string_to_write)
 
                 print(f'Message from {str(self.address)}\n'
-                      f'"{data_recieve}"')
+                      f'"{data_receive}"')
 
         except Exception as ex:
             print(ex)
         finally:
             self.socket.close()
+
+
 
 
 if __name__ == '__main__':
