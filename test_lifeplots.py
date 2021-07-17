@@ -12,30 +12,32 @@ import random
 
 import multiprocessing
 
-from query_handler import Server
-
 
 def plott():
-    server = Server('192.168.1.100', 6767)
     # Create figure for plotting
     fig, ax = plt.subplots()
     xs = []
     ys = []
 
     def animate(i, xs: list, ys: list):
-        # grab the data from thingspeak.com
-        flt = server.main()
-        # Add x and y to lists
-        xs.append(dt.datetime.now().strftime('%H:%M:%f'))
-        ys.append(flt)
-        # Limit x and y lists to 10 items
-        xs = xs[-20:]
-        ys = ys[-20:]
+        with open('all_queries.json', 'r') as file:
+            data = file.read()
+
+        if len(xs) < 10:
+            flt = int(data.split("__")[0])
+            # Add x and y to lists
+            xs.append(dt.datetime.now().strftime('%H:%M:%t'))
+            ys.append(flt)
+        else:
+            xs = xs[-10:]
+            yss = data.split('__')
+            yss.reverse()
+            ys = [int(i) for i in yss]
         # Draw x and y lists
         ax.clear()
         ax.plot(xs, ys)
         # Format plot
-        ax.set_ylim([0,100])
+        ax.set_ylim([0, 100])
         plt.xticks(rotation=45, ha='right')
         plt.subplots_adjust(bottom=0.20)
         ax.set_title('Plot of random numbers from https://qrng.anu.edu.au')
@@ -43,7 +45,7 @@ def plott():
         ax.set_ylabel('Random Number')
 
     # Set up plot to call animate() function every 1000 milliseconds
-    ani = animation.FuncAnimation(fig, animate, fargs=(xs, ys), interval=100)
+    ani = animation.FuncAnimation(fig, animate, fargs=(xs, ys), interval=500)
 
     plt.show()
 
