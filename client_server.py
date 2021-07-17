@@ -37,7 +37,7 @@ class Client:
             #
             # print(f'Message from {str(self.address)}\n'
                 #       f'"{self.data_receive}"')
-                def write_fake_data(filename):
+            def write_fake_data(filename):
                 self.data_receive = str(random.randint(1, 100))
 
                 with open(filename, 'r') as file:
