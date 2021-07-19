@@ -67,7 +67,7 @@ class SeaofBTCapp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
-
+        self.title('SCS')
         self.geometry('1920x1080')
 
         container.pack(side="top", fill="both", expand=True)
@@ -117,26 +117,31 @@ class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
+        label = tk.Label(self, text="Главная страница", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        button = tk.Button(self, text="Visit Page 1",
-                           command=lambda: controller.show_frame(PageOne))
-        button.pack()
-
-        button2 = tk.Button(self, text="Visit Page 2",
+        button2 = tk.Button(self, text="Автобусная остановка",
                             command=lambda: controller.show_frame(PageTwo))
         button2.pack()
+
+        button = tk.Button(self, text="О проекте",
+                           command=lambda: controller.show_frame(PageOne))
+        button.pack()
 
 
 class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page One!!!", font=LARGE_FONT)
+        label = tk.Label(self, text="О проекте", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, text="Back to Home",
+        label = tk.Label(self, text="Тут должен быть очень длинный текст с описанием проекта\n"
+                                    "Но мне его очень лень писать, к тому же, его вряд ли \n"
+                                    "Кто либо будет читать")
+        label.pack()
+
+        button1 = tk.Button(self, text="На главную",
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
@@ -145,10 +150,10 @@ class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page Two!!!", font=LARGE_FONT)
+        label = tk.Label(self, text="Автобусная остановка", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, text="Back to Home",
+        button1 = tk.Button(self, text="На главную",
                             command=lambda: controller.show_frame(StartPage))
 
         button1.pack()
