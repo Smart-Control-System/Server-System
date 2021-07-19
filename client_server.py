@@ -5,25 +5,21 @@ import random
 
 class Client:
 
-    def __init__(self, server_ip, port):
+    def __init__(self):
         self.socket = socket.socket()
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.bind((str(server_ip), int(port)))
-        self.socket.listen(1)
-        self.connection = None
-        self.address = None
-        self.buffer_size = 0
-        self.json_data = 0
-        # unsafe but for now ok
-        self.data_receive = "bdalbdald"
-        self.a = 1
 
-    def main(self):
+    def main(self, param):
+        if param == 'station':
+            self.socket.connect(('90.154.1.30', 6767))
+            request = {'type': 'request',
+                       'data': {'name': 'station'}
+                       }
+            self.socket.send(json.dumps(request).encode())
         while 1:
-            self.connection, self.address = self.socket.accept()
+
 
             # always setting up buffer size before a message
-            self.buffer_size = self.connection.recv(8).decode('utf-8')
+            self.buffer_size = self.socket.recv(8).decode('utf-8')
 
             if self.buffer_size.isdigit():
                 print('setting buffer size to', self.buffer_size)
@@ -31,7 +27,7 @@ class Client:
                 self.connection.close()
                 continue
 
-            self.data_receive = self.connection.recv(int(self.buffer_size)).decode('utf-8')
+            self.data_receive = self.socket.recv(int(self.buffer_size)).decode('utf-8')
             self.data_receive = self.data_receive.replace("\\", "").replace('"{', '{').replace('}"', '}')
             print(f'Message from {str(self.address)}\n'
                   f'{self.data_receive}')
@@ -61,6 +57,9 @@ class Client:
             elif self.data_receive["data"]["sensor_type"] == "dht11":
                 write_fake_data('dht_11_temp', self.data_receive["data"]["values"]["temp"])
                 write_fake_data('dht_11_wet', self.data_receive["data"]["values"]["wet"])
+
+    def stop_conection(self):
+        self.socket.close()
 
 
 

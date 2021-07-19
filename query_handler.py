@@ -21,7 +21,7 @@ class Server:
         # unsafe but for now ok
         self.data_receive = "bdalbdald"
 
-
+        self.customers = {}
 
     def main(self):
         while 1:
@@ -40,30 +40,21 @@ class Server:
 
             self.data_receive = json.loads(self.data_receive)
 
+            if self.data_receive['type'] == 'request':
+                try:
+                    self.customers[self.data_receive['data']['object_name']].append(self.connection)
+                except KeyError:
+                    self.customers[self.data_receive['data']['object_name']] = [self.connection]
 
-            print(f'Message from {str(self.address)}\n'
-                  f'"{self.data_receive}"')
-
-            return float(self.data_receive["data"]["sensor_values"])
-
-            # with open('all_queries.json', 'r') as file:
-            #     string_to_write = json.dumps(self.data_receive) + '\n'
-            #     file.write(str(string_to_write))
-
-
-
-    def return_last_amount_light(self):
-        print(self.data_receive)
-        try:
-            return self.data_receive["data"]
-        except:
-            print('error')
-
-
-
+            elif self.data_receive['type'] == 'data':
+                if self.data_receive['data']['object_name'] in self.customers.keys():
+                    for connection in self.customers[self.data_receive['data']['object_name']]:
+                        to_send = json.dumps(self.data_receive).encode()
+                        connection.send(len(to_send))
+                        connection.send(to_send)
 
 
 
 if __name__ == '__main__':
-    a = Server('192.168.1.99', 7777)
+    a = Server('192.168.1.99', 6767)
     a.main()
