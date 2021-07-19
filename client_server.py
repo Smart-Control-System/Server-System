@@ -10,7 +10,7 @@ class Client:
 
     def main(self, param):
         if param == 'station':
-            self.socket.connect(('90.154.1.30', 6767))
+            self.socket.connect(('192.168.1.86', 6767))
             request = {'type': 'request',
                        'data': {'name': 'station'}
                        }

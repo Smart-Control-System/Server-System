@@ -40,6 +40,8 @@ class Server:
 
             self.data_receive = json.loads(self.data_receive)
 
+            print(self.data_receive)
+
             if self.data_receive['type'] == 'request':
                 try:
                     self.customers[self.data_receive['data']['object_name']].append(self.connection)
