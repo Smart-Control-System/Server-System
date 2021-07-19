@@ -26,7 +26,7 @@ def plott():
         if len(xs) < 10:
             flt = int(data.split("__")[0])
             # Add x and y to lists
-            xs.append(dt.datetime.now().strftime('%H:%M:%t'))
+            xs.append(str(time.time()))
             ys.append(flt)
         else:
             xs = xs[-10:]
