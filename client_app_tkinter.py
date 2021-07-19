@@ -4,7 +4,7 @@ import datetime as dt
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
-
+from client_server import Client
 
 def get_animated_plot(corridor, plot_name, data_filename, root):
 
@@ -61,6 +61,7 @@ import tkinter as tk
 
 LARGE_FONT = ("Verdana", 12)
 
+server = Client()
 
 class SeaofBTCapp(tk.Tk):
 
@@ -110,6 +111,7 @@ class SeaofBTCapp(tk.Tk):
             frame = self.frames[PageTwo]
             frame.terminate_animation(self)
             print('anim terminated')
+            server.stop_conection()
 
 
 
@@ -149,6 +151,7 @@ class PageOne(tk.Frame):
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
+        server.main('station')
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Автобусная остановка", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
