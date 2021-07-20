@@ -53,11 +53,11 @@ class Server:
 
             elif self.data_receive['type'] == 'data':
                 if self.data_receive['data']['object_name'] in self.customers.keys():
-                    for address in self.customers[self.data_receive['data']['object_name']]:
+                    for address_from_connection in self.customers[self.data_receive['data']['object_name']]:
                         try:
                             to_send = json.dumps(self.data_receive).encode()
                             print(str(len(to_send)).encode())
-                            address = '.'.join([str(i) for i in address][:3])
+                            address = '.'.join([str(i) for i in address_from_connection][:3])
                             address = address[:-6]
                             print(address)
                             socket_for_app = socket.socket()
@@ -66,7 +66,7 @@ class Server:
                             socket_for_app.send(to_send)
                         except:
                             print('error connecting to', address)
-                            self.customers[self.data_receive['data']['object_name']].remove(address)
+                            self.customers[self.data_receive['data']['object_name']].remove(address_from_connection)
 
 
             self.connection.close()
