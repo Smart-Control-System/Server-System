@@ -38,9 +38,9 @@ class Server:
 
             self.data_receive = self.connection.recv(int(self.buffer_size)).decode('utf-8')
 
-            self.data_receive = self.data_receive.replace('"{', '{').replace('}"', '}').replace('\\', '')
+            self.data_receive = self.data_receive.replace('"{', '{').replace('}"', '}').replace('\\', '').replace('}"', '}')
 
-            print(self.data_receive.replace('}"', '}'))
+            print(self.data_receive)
 
             self.data_receive = json.loads(self.data_receive)
 
