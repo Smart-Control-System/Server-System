@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
 from client_server import Client
+import os
+
 
 def get_animated_plot(corridor, plot_name, data_filename, root):
-
     # Create figure for plotting
     fig, ax = plt.subplots()
     xs = []
@@ -21,7 +22,7 @@ def get_animated_plot(corridor, plot_name, data_filename, root):
         try:
             flt = float(data.split("__")[0])
         except:
-            flt=float(data.split("__")[1])
+            flt = float(data.split("__")[1])
         # Add x and y to lists
         xs.append(str(time.time())[5:])
         ys.append(flt)
@@ -61,7 +62,6 @@ import tkinter as tk
 
 LARGE_FONT = ("Verdana", 12)
 
-server = Client()
 
 class SeaofBTCapp(tk.Tk):
 
@@ -70,6 +70,8 @@ class SeaofBTCapp(tk.Tk):
         container = tk.Frame(self)
         self.title('SCS')
         self.geometry('1920x1080')
+
+        self.server_started = False
 
         container.pack(side="top", fill="both", expand=True)
 
@@ -91,9 +93,10 @@ class SeaofBTCapp(tk.Tk):
 
         self.animation_not_started_yet = True
 
-
     def show_frame(self, cont):
         if cont == PageTwo:
+            os.system('start cmd /c python client_server.py')
+            self.server_started = True
             if self.animation_not_started_yet:
                 frame = self.frames[cont]
                 frame.tkraise()
@@ -106,13 +109,13 @@ class SeaofBTCapp(tk.Tk):
 
 
         else:
+            if self.server_started:
+                os.system("taskkill /im cmd.exe")
             frame = self.frames[cont]
             frame.tkraise()
             frame = self.frames[PageTwo]
             frame.terminate_animation(self)
             print('anim terminated')
-            server.stop_conection()
-
 
 
 class StartPage(tk.Frame):
@@ -151,7 +154,7 @@ class PageOne(tk.Frame):
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
-        server.main('station')
+
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Автобусная остановка", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
@@ -164,9 +167,8 @@ class PageTwo(tk.Frame):
     def start_animation(self, parent):
 
         parent.anim.append(get_animated_plot([0, 100], 'dht_11_wet', 'dht_11_wet', self))
-        parent.anim.append(get_animated_plot([20, 40],'dht_11_temp', 'dht_11_temp', self))
-        parent.anim.append(get_animated_plot([0, 3500],'light_sensor', 'light_sensor', self))
-
+        parent.anim.append(get_animated_plot([20, 40], 'dht_11_temp', 'dht_11_temp', self))
+        parent.anim.append(get_animated_plot([0, 3500], 'light_sensor', 'light_sensor', self))
 
     def terminate_animation(self, parent):
 
@@ -189,6 +191,7 @@ class PageTwo(tk.Frame):
             print('error in stopping')
             print(ex)
             pass
+
 
 app = SeaofBTCapp()
 app.mainloop()

@@ -61,14 +61,14 @@ class Server:
                             address = address[:-6]
                             print(address)
                             socket_for_app = socket.socket()
-                            socket_for_app.connect((address, 6767))
+                            socket_for_app.connect((address, 6767), 3000)
                             socket_for_app.send(str(len(to_send)).encode())
                             socket_for_app.send(to_send)
                         except:
-                            try:
-                                print('error connecting to', address)
-                            except:
-                                print('error in redirecting info')
+                            print('error connecting to', address)
+                            self.customers[self.data_receive['data']['object_name']].remove(address)
+
+
             self.connection.close()
 
 
