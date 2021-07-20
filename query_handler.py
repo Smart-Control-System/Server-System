@@ -61,7 +61,7 @@ class Server:
                             address = address[:-6]
                             print(address)
                             socket_for_app = socket.socket()
-                            socket_for_app.connect((address, 6767), 100)
+                            socket_for_app.connect((address, 6767))
                             socket_for_app.send(str(len(to_send)).encode())
                             socket_for_app.send(to_send)
                         except:
