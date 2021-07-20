@@ -54,9 +54,12 @@ class Server:
             elif self.data_receive['type'] == 'data':
                 if self.data_receive['data']['object_name'] in self.customers.keys():
                     for connection in self.customers[self.data_receive['data']['object_name']]:
-                        to_send = json.dumps(self.data_receive).encode()
-                        connection.send(len(to_send))
-                        connection.send(to_send)
+                        try:
+                            to_send = json.dumps(self.data_receive).encode()
+                            connection.send(len(to_send))
+                            connection.send(to_send)
+                        except Exception as ex:
+                            print(ex)
 
 
 
