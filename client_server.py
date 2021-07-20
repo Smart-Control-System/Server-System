@@ -6,16 +6,23 @@ import random
 class Client:
 
     def __init__(self):
-        self.socket = socket.socket(('192.168.1.100', 6767))
+        self.socket_start = socket.socket()
+        self.socket = socket.socket()
 
     def main(self, param):
         if param == 'station':
-            self.socket.connect(('192.168.1.86', 6767))
+            self.socket_start.connect(('192.168.1.86', 6767))
             request = {'type': 'request',
                        'data': {'object_name': 'station_0'}
                        }
-            self.socket.send(str(len(json.dumps(request).encode())).encode())
-            self.socket.send(json.dumps(request).encode())
+            self.socket_start.send(str(len(json.dumps(request).encode())).encode())
+            self.socket_start.send(json.dumps(request).encode())
+
+        print('socket sent')
+        self.socket = socket.socket()
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.bind(('192.168.1.100', 6767))
+        self.socket.listen(1)
         while 1:
             self.connection, self.address = self.socket.accept()
 
