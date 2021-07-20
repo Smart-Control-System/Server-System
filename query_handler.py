@@ -57,6 +57,7 @@ class Server:
                         to_send = json.dumps(self.data_receive).encode()
                         print(str(len(to_send)).encode())
                         address = '.'.join([str(i) for i in address])
+                        print(address)
                         socket_for_app = socket.socket()
                         socket_for_app.connect((address, 6767))
                         socket_for_app.send(str(len(to_send)).encode())
