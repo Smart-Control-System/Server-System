@@ -65,7 +65,7 @@ class Server:
                             socket_for_app.send(str(len(to_send)).encode())
                             socket_for_app.send(to_send)
                         except:
-                            print('error connecting to', address))
+                            print('error connecting to', address)
 
 
             self.connection.close()
