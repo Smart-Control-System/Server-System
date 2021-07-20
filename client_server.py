@@ -64,5 +64,5 @@ class Client:
 
 
 if __name__ == "__main__":
-    client = Client('192.168.1.100', 6767)
-    client.main()
+    client = Client()
+    client.main('station')

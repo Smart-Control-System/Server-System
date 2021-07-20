@@ -60,7 +60,7 @@ class Server:
                             connection.send(to_send)
                         except Exception as ex:
                             print(ex)
-
+            self.connection.close()
 
 
 if __name__ == '__main__':
