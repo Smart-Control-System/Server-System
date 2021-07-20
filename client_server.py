@@ -12,8 +12,9 @@ class Client:
         if param == 'station':
             self.socket.connect(('192.168.1.86', 6767))
             request = {'type': 'request',
-                       'data': {'name': 'station'}
+                       'data': {'object_name': 'station'}
                        }
+            self.socket.send(str(len(json.dumps(request).encode())).encode())
             self.socket.send(json.dumps(request).encode())
         while 1:
 
@@ -21,11 +22,6 @@ class Client:
             # always setting up buffer size before a message
             self.buffer_size = self.socket.recv(8).decode('utf-8')
 
-            if self.buffer_size.isdigit():
-                print('setting buffer size to', self.buffer_size)
-            else:
-                self.connection.close()
-                continue
 
             self.data_receive = self.socket.recv(int(self.buffer_size)).decode('utf-8')
             print(f'Message from {str(self.address)}\n'

@@ -56,7 +56,7 @@ class Server:
                     for connection in self.customers[self.data_receive['data']['object_name']]:
                         try:
                             to_send = json.dumps(self.data_receive).encode()
-                            connection.send(len(to_send))
+                            connection.send(str(len(to_send)).encode())
                             connection.send(to_send)
                         except Exception as ex:
                             print(ex)
