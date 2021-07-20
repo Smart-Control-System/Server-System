@@ -12,7 +12,7 @@ class Client:
         if param == 'station':
             self.socket.connect(('192.168.1.86', 6767))
             request = {'type': 'request',
-                       'data': {'object_name': 'station'}
+                       'data': {'object_name': 'station_0'}
                        }
             self.socket.send(str(len(json.dumps(request).encode())).encode())
             self.socket.send(json.dumps(request).encode())
