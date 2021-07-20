@@ -47,17 +47,18 @@ class Server:
 
             if self.data_receive['type'] == 'request':
                 try:
-                    self.customers[self.data_receive['data']['object_name']].append(self.connection)
+                    self.customers[self.data_receive['data']['object_name']].append(self.address)
                 except KeyError:
-                    self.customers[self.data_receive['data']['object_name']] = [self.connection]
+                    self.customers[self.data_receive['data']['object_name']] = [self.address]
 
             elif self.data_receive['type'] == 'data':
                 if self.data_receive['data']['object_name'] in self.customers.keys():
-                    for connection in self.customers[self.data_receive['data']['object_name']]:
+                    for address in self.customers[self.data_receive['data']['object_name']]:
                         to_send = json.dumps(self.data_receive).encode()
                         print(str(len(to_send)).encode())
-                        connection.send(str(len(to_send)).encode())
-                        connection.send(to_send)
+                        socket_for_app = socket.socket((address, 6767))
+                        socket_for_app.send(str(len(to_send)).encode())
+                        socket_for_app.send(to_send)
             self.connection.close()
 
 

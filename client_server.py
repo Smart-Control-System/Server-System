@@ -6,7 +6,7 @@ import random
 class Client:
 
     def __init__(self):
-        self.socket = socket.socket()
+        self.socket = socket.socket(('192.168.1.100', 6767))
 
     def main(self, param):
         if param == 'station':
@@ -17,13 +17,18 @@ class Client:
             self.socket.send(str(len(json.dumps(request).encode())).encode())
             self.socket.send(json.dumps(request).encode())
         while 1:
-
+            self.connection, self.address = self.socket.accept()
 
             # always setting up buffer size before a message
-            self.buffer_size = self.socket.recv(8).decode('utf-8')
+            self.buffer_size = self.connection.recv(8).decode('utf-8')
 
+            if self.buffer_size.isdigit():
+                pass
+            else:
+                self.connection.close()
+                continue
 
-            self.data_receive = self.socket.recv(int(self.buffer_size)).decode('utf-8')
+            self.data_receive = self.connection.recv(int(self.buffer_size)).decode('utf-8')
             print(f'Message from {str(self.address)}\n'
                   f'{self.data_receive}')
 
