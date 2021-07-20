@@ -31,7 +31,7 @@ class Server:
             self.buffer_size = self.connection.recv(8).decode('utf-8')
 
             if self.buffer_size.isdigit():
-                print('setting buffer size to', self.buffer_size)
+                pass
             else:
                 self.connection.close()
                 continue
