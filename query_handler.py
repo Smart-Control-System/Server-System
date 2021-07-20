@@ -40,7 +40,7 @@ class Server:
 
             self.data_receive = self.data_receive.replace('"{', '{').replace('}"', '}').replace('\\', '')
 
-            print(self.data_receive)
+            print(self.data_receive.replace('}"', '}'))
 
             self.data_receive = json.loads(self.data_receive)
 
