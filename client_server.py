@@ -28,7 +28,6 @@ class Client:
                 continue
 
             self.data_receive = self.socket.recv(int(self.buffer_size)).decode('utf-8')
-            self.data_receive = self.data_receive.replace("\\", "").replace('"{', '{').replace('}"', '}')
             print(f'Message from {str(self.address)}\n'
                   f'{self.data_receive}')
 
