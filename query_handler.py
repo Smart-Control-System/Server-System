@@ -2,7 +2,7 @@ import socket
 import rsa
 import config as cf
 import json
-
+import time
 import socket
 
 
@@ -40,10 +40,9 @@ class Server:
 
             self.data_receive = self.data_receive.replace('"{', '{').replace('}"', '}').replace('\\', '').replace('}"', '}')
 
-            print(self.data_receive)
-
             self.data_receive = json.loads(self.data_receive)
 
+            print(time.time())
             print(self.data_receive)
 
             if self.data_receive['type'] == 'request':
