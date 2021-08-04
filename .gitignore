@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+dht_11_temp
+
+dht_11_wet
+
+light_sensor
