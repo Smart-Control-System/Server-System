@@ -51,7 +51,7 @@ class Server:
                 except KeyError:
                     self.customers[self.data_receive['data']['object_name']] = [self.address]
 
-                all_string_addresses = ', '.join([i for i in self.customers[self.data_receive['data']['object_name']]])
+                all_string_addresses = ', '.join(self.customers[self.data_receive['data']['object_name']])
 
                 print(f"{str(self.data_receive['data']['object_name'])}: {all_string_addresses}")
 
