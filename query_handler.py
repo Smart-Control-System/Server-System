@@ -45,15 +45,15 @@ class Server:
             print(time.time())
             print(self.data_receive)
 
+            all_string_addresses = ', '.join(str(x) for x in self.customers[self.data_receive['data']['object_name']])
+
+            print(f"{str(self.data_receive['data']['object_name'])}: {all_string_addresses}")
+
             if self.data_receive['type'] == 'request':
                 try:
                     self.customers[self.data_receive['data']['object_name']].append(self.address)
                 except KeyError:
                     self.customers[self.data_receive['data']['object_name']] = [self.address]
-
-                all_string_addresses = ', '.join(str(x) for x in self.customers[self.data_receive['data']['object_name']])
-
-                print(f"{str(self.data_receive['data']['object_name'])}: {all_string_addresses}")
 
             elif self.data_receive['type'] == 'data':
                 if self.data_receive['data']['object_name'] in self.customers.keys():
