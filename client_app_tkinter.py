@@ -38,8 +38,8 @@ def get_animated_plot(corridor, plot_name, data_filename, root):
         ax.set_ylim([corridor[0], corridor[1]])
         ax.set_title(plot_name)
         fig.autofmt_xdate(bottom=0.3, rotation=45, ha='right')
-        ax.set_ylabel('Sensor data')
-        ax.set_xlabel('Timestamp')
+        ax.set_ylabel('Данные с датчика')
+        ax.set_xlabel('Время')
         print(flt)
 
     bar1 = FigureCanvasTkAgg(fig, root)
@@ -169,9 +169,9 @@ class PageTwo(tk.Frame):
 
     def start_animation(self, parent):
 
-        parent.anim.append(get_animated_plot([0, 100], 'dht_11_wet', 'dht_11_wet', self))
-        parent.anim.append(get_animated_plot([20, 40], 'dht_11_temp', 'dht_11_temp', self))
-        parent.anim.append(get_animated_plot([0, 3500], 'light_sensor', 'light_sensor', self))
+        parent.anim.append(get_animated_plot([0, 100], 'Датчик влажности', 'dht_11_wet', self))
+        parent.anim.append(get_animated_plot([20, 40], 'Датчик температуры', 'dht_11_temp', self))
+        parent.anim.append(get_animated_plot([0, 3500], 'Датчик света', 'light_sensor', self))
 
     def terminate_animation(self, parent):
 
