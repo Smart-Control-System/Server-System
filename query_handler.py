@@ -51,7 +51,7 @@ class Server:
                 except KeyError:
                     self.customers[self.data_receive['data']['object_name']] = [self.address]
 
-                print(f"{self.data_receive['data']['object_name']}: {', '.join([i for i in self.customers[self.data_receive['data']['object_name']]])}")
+                print(f"{str(self.data_receive['data']['object_name'])}: {', '.join([i for i in self.customers[self.data_receive['data']['object_name']]])}")
 
             elif self.data_receive['type'] == 'data':
                 if self.data_receive['data']['object_name'] in self.customers.keys():
