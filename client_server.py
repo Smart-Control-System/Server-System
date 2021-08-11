@@ -13,7 +13,7 @@ class Client:
         if param == 'station':
             self.socket_start.connect(('192.168.1.86', 6767))
             request = {'type': 'request',
-                       'data': {'object_name': 'station_0'}
+                       'data': {'object_name': 'dht11_mainroom'}
                        }
             self.socket_start.send(str(len(json.dumps(request).encode())).encode())
             self.socket_start.send(json.dumps(request).encode())

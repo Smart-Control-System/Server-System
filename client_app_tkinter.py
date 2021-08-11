@@ -25,7 +25,7 @@ def get_animated_plot(corridor, plot_name, data_filename, root):
         try:
             flt = float(data.split("__")[0])
         except:
-            flt = float(data.split("__")[1])
+            flt = 0
         # Add x and y to lists
         xs.append(str(time.time())[5:])
         ys.append(flt)
