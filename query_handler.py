@@ -45,9 +45,13 @@ class Server:
             print(time.time())
             print(self.data_receive)
 
-            all_string_addresses = ', '.join(str(x) for x in self.customers[self.data_receive['data']['object_name']])
+            try:
+                all_string_addresses = ', '.join(
+                    str(x) for x in self.customers[self.data_receive['data']['object_name']])
 
-            print(f"{str(self.data_receive['data']['object_name'])}: {all_string_addresses}")
+                print(f"{str(self.data_receive['data']['object_name'])}: {all_string_addresses}")
+            except:
+                pass
 
             if self.data_receive['type'] == 'request':
                 try:
