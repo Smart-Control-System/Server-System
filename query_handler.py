@@ -13,7 +13,7 @@ class Server:
         self.socket = socket.socket()
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((str(server_ip), int(port)))
-        self.socket.listen(1)
+        self.socket.listen(5)
         self.connection = None
         self.address = None
         self.buffer_size = 0
