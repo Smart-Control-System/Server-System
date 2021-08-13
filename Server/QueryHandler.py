@@ -21,7 +21,8 @@ class QueryHandler:
         self.db = Connector()
 
         # list for clients for each object
-        self.participants = {}
+        self.clients_requests = {}
+        self.commands = {}
 
     def mainloop(self):
         while 1:
@@ -41,11 +42,30 @@ class QueryHandler:
             if len(self.data_receive.split('_')) == 4:
                 self.db.connect('allq')
                 self.db.write_query(self.data_receive)
-                self.data_receive = self.data_receive.split('_')
-                if self.data_receive[0] == '1':
+                data = self.data_receive.split('_')
+                if data[0] == '0':
                     try:
-                        self.participants[self.data_receive[1]] += self.address
+                        self.connection.send(self.commands[data[1]].encode('utf-8'))
+                    except IndexError:
+                        pass  # if there is no commands for object just do nothing
+                    if data[1] in self.clients_requests.keys():
+                        for address in self.clients_requests[data[1]]:
+                            sock_for_client = socket.socket()
+                            sock_for_client.connect((address, 6767))
+                            sock_for_client.send(self.data_receive.encode('utf-8'))
+                elif data[0] == '1':
+                    try:
+                        self.clients_requests[data[1]] += self.address
                     except KeyError:
-                        self.participants[self.data_receive[1]] = self.address
+                        self.clients_requests[data[1]] = self.address
+                elif data[0] == '2':
+                    try:
+                        self.commands[data[1]] += data[3]
+                    except KeyError:
+                        self.commands[data[1]] = data[3]
+                else:
+                    print('Unexpected type of request\n'
+                          'Probably sb trying to hack')
+
             else:
                 self.connection.send(b'Wrong query type')
