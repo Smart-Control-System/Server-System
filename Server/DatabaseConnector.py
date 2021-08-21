@@ -10,7 +10,7 @@ class Connector:
         self.cursor = None
 
     def write_query(self, query):
-        query = f"""INSERT INTO all_queries (id, query) VALUES ({time.time()}, {query})"""
+        query = f'''INSERT INTO "all_queries" (id, query) VALUES ({int(time.time()*100)}, "{query}")'''
         self.cursor.execute(query)
         self.connection.commit()
 
