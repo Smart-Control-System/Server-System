@@ -12,6 +12,8 @@ class ConsoleClient:
 
         self.flag_add_new_board = True
 
+        self.cl_func = ClientFunc()
+
         self.start()
 
     def start(self):
@@ -56,7 +58,9 @@ class ConsoleClient:
         board_id = input('Enter the board id: ')
         if board_id not in [i.id for i in self.added_boards]:
             print('Adding the new board')
-
+            board_info = self.cl_func.get_board(board_id)
+            self.added_boards.append(Board(board_id, board_info))
+            print(f"Board {board_id} successfully added")
 
     def choose_board(self):
         pass
