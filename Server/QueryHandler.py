@@ -25,6 +25,7 @@ class QueryHandler:
         self.commands = {}
 
     def mainloop(self):
+        self.db.connect()
         while 1:
             self.connection, self.address = self.socket.accept()
             # always setting up buffer size before a message
@@ -38,10 +39,11 @@ class QueryHandler:
 
             self.data_receive = self.connection.recv(int(self.buffer_size)).decode('utf-8')
 
+            self.db.write_query(self.data_receive)
             #
             print(self.data_receive)
             #
-
+            data = self.data_receive.split('_')
             # if we get data from board
             if data[0] == '0':
                 # commented while board cannot get any data
@@ -77,11 +79,11 @@ class QueryHandler:
                     self.commands[data[1]] = data[2]
 
             # if board inits
-            elif data[0] == 3:
+            elif data[0] == '3':
                 self.db.write_board(data[1], data[2])
 
             # if client need to get board info
-            elif data[0] == 4:
+            elif data[0] == '4':
                 answer = self.db.get_board(data[1])
                 self.connection.send(answer.encode('utf-8'))
 

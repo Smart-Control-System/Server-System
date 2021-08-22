@@ -24,10 +24,9 @@ class Connector:
         self.cursor.execute(query)
         return self.cursor.fetchone()
 
-    def connect(self, name):
-        if name == 'allq':
-            self.connection = sqlite3.connect(self.db_n_allq)
-            self.cursor = self.connection.cursor()
+    def connect(self):
+        self.connection = sqlite3.connect(self.db_n_allq)
+        self.cursor = self.connection.cursor()
 
     def disconnect(self):
         self.cursor.close()
