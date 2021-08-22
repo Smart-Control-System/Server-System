@@ -14,6 +14,16 @@ class Connector:
         self.cursor.execute(query)
         self.connection.commit()
 
+    def write_board(self, board_id, connection_types):
+        query = f'''INSERT INTO "boards" (id, connection_types) VALUES ({board_id}, "{connection_types}")'''
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def get_board(self, board_id):
+        query = f'''SELECT * FROM boards WHERE id={board_id}'''
+        self.cursor.execute(query)
+        return self.cursor.fetchone()
+
     def connect(self, name):
         if name == 'allq':
             self.connection = sqlite3.connect(self.db_n_allq)
