@@ -1,8 +1,7 @@
 import os
 import time
 from Board import Board
-from CLientFunxionality import ClientFunc
-
+from ClientFuncionality import ClientFunc
 
 
 class ConsoleClient:

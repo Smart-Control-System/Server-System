@@ -28,6 +28,7 @@ class QueryHandler:
         self.db.connect()
         while 1:
             self.connection, self.address = self.socket.accept()
+
             # always setting up buffer size before a message
             self.buffer_size = self.connection.recv(8).decode('utf-8')
 
